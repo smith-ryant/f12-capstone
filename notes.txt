@@ -1,0 +1,1719 @@
+The req parameter stands for "request" and it's an object that contains information about the HTTP request that triggered the route handler. This includes things like query parameters, body data, HTTP headers, and more.
+
+In your getAirplanes function, you're not using req because you're not doing anything with the request data. You're simply sending back the airplanes array with a 200 status code, which means "OK".
+
+However, req is still included as a parameter because Express.js always passes the request and response objects (commonly named req and res, respectively) to your route handlers in that order. Even if you don't use the req object, you still need to include it as a parameter so that res is correctly recognized as the second parameter.
+
+If you were to remove req, then res would be interpreted as the first parameter and your function wouldn't work as expected. For example, res.status(200) would throw an error because res would be undefined.
+
+<form id="addAirplane_form">
+        <input type="text" , id="nNumber" , placeholder="nNumber" />
+        <input type="text" , id="airplane_year", placeholder="Airplane year" />
+        <input type="text" , id="airplane_make", placeholder="Airplane make" />
+        <input type="text", id="airplane_model", placeholder="Airplane model"/>
+        <input type="text", id="aiplane_price", placeholder="Airplane price"/>
+        <input type="text" , id="airplane_imgURL" , placeholder="Airplane picture"/>
+        <button>Add Aircraft</button>
+      </form>
+
+//NOTE -
+
+smith-ryant: hello
+
+GitHub Copilot: Hello! How can I assist you with your programming needs today?
+
+smith-ryant: i want to click on an image in an airplane card and then have that image enlarge so that it can be seen. how do i do that?
+
+GitHub Copilot: To achieve this, you can use a JavaScript library like Lightbox, or you can implement a simple modal yourself using plain JavaScript, HTML, and CSS. Here's a simple way to do it:
+
+1. Add an `onclick` event to your image that triggers a function, passing the image source to the function.
+
+```html
+<img src="airplane.jpg" onclick="openModal(this.src)" />
+```
+
+2. Create a modal in your HTML. This will be hidden by default and will be shown when an image is clicked.
+
+```html
+<div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+```
+
+3. Add some CSS to style the modal and the image.
+
+```css
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.9);
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+```
+
+4. Add JavaScript to handle the modal opening, closing, and image changing.
+
+```javascript
+function openModal(src) {
+  document.getElementById('myModal').style.display = "block";
+  document.getElementById('img01').src = src;
+}
+
+document.getElementsByClassName('close')[0].onclick = function() { 
+  document.getElementById('myModal').style.display = "none";
+}
+```
+
+Now, when you click on an image, it should open in a modal. Clicking on the 'X' or outside the image should close the modal.
+
+smith-ryant: function createAirplaneCard(airplane) {
+  //create a new div element for the card
+  const airplaneCard = document.createElement("div");
+  airplaneCard.classList.add("airplane_card");
+  //set the html content of the house card element unsing teplate literals
+
+  // Add the nNumber as a data attribute to the card
+  airplaneCard.dataset.nNumber = airplane.nNumber;
+  airplaneCard.innerHTML = `<img alt="photo of airplane" src=${airplane.imgURL} class="airplane_cover_img"/>
+  
+  <p class="airplane_nNumber">${airplane.nNumber}</p>
+  <p class="airplane_year">${airplane.year}</p>
+  <p class="airplane_make">${airplane.make}</p>
+  <p class="airplane_model">${airplane.model}</p>
+  <p class="airplane_price">${airplane.price}</p>
+  
+
+  <div class="container_btns">
+    <button onclick="updateAirplane(${airplane.id}, 'minus')"> - </button>
+    <button onclick="updateAirplane(${airplane.id}, 'plus')"> + </button>
+    <button class="delete_btn onclick="deleteAirplane(${airplane.id}"> Delete </button>
+  </div>
+  `;
+  //appending the airplane card to the airplane container
+  airplaneContainer.appendChild(airplaneCard);
+} is this correct?
+
+GitHub Copilot: The function `createAirplaneCard(airplane)` you've provided is mostly correct. It creates a new `div` element, adds a class to it, sets its `data-nNumber` attribute, and sets its inner HTML to a template literal that includes the airplane's details and some buttons for updating and deleting the airplane.
+
+However, there's a small syntax error in the delete button's `onclick` attribute. You're missing a closing quote after `delete_btn`. Here's the corrected line:
+
+```javascript
+<button class="delete_btn" onclick="deleteAirplane(${airplane.id})"> Delete </button>
+```
+
+Also, to implement the image enlargement feature you asked about earlier, you can modify the `img` tag to include the `onclick` event that triggers the modal:
+
+```javascript
+<img alt="photo of airplane" src=${airplane.imgURL} class="airplane_cover_img" onclick="openModal(this.src)" />
+```
+
+Remember to implement the `openModal(src)` function and the modal HTML and CSS as described in the previous response.
+
+smith-ryant: uncaught reference error: openModal is not defined at HTMLImageElement.onclick
+
+GitHub Copilot: The error message "Uncaught ReferenceError: openModal is not defined" means that the JavaScript interpreter can't find a function named `openModal` that's being called in your `onclick` event.
+
+You need to define the `openModal` function in your JavaScript code. Here's a simple example of how you could define it:
+
+```javascript
+function openModal(src) {
+  // Get the modal
+  var modal = document.getElementById('myModal');
+
+  // Get the image and insert it inside the modal
+  var img = document.getElementById('img01');
+  img.src = src;
+
+  // Get the <span> element
+
+ that
+
+ closes the modal
+  var span = document.getElementsByClassName('close')[0];
+
+  // Show the modal
+  modal.style.display = "block";
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() { 
+    modal.style.display = "none";
+  }
+}
+```
+
+This function will open a modal and display the image that was clicked. The modal can be closed by clicking on a `<span>` element with the class 'close'. Make sure you have the corresponding HTML and CSS for the modal in your code.
+
+smith-ryant: document.addEventListener("DOMContentLoaded", (event) => {
+  const modal = document.getElementById("modal");
+  const imgs = document.querySelectorAll(".airplane_imgURL");
+  const modalImg = document.getElementById("img01");
+  const captionText = document.getElementById("caption");
+
+  imgs.forEach((img) => {
+    img.onclick = function (event) {
+      event.preventDefault(); // Prevent the default action
+      console.log("image clicked");
+      modal.style.display = "block";
+
+      // Get the nNumber value from the clicked image
+      const nNumber = img.getAttribute("data-nNumber");
+
+      // Construct the image source based on the nNumber value
+      modalImg.src = `resources/${nNumber}.jpeg`;
+
+      captionText.innerHTML = img.alt;
+    };
+  });
+
+where do i put that?
+
+GitHub Copilot: The code you've provided should be placed in a script tag at the end of your HTML file, or in an external JavaScript file that's linked to your HTML file. This code adds an event listener to the `DOMContentLoaded` event, which fires when the initial HTML document has been completely loaded and parsed.
+
+If you're using an external JavaScript file, make sure to link it in your HTML file like this:
+
+```html
+<script src="path_to_your_script.js"></script>
+```
+
+This script tag should be placed right before the closing `</body>` tag.
+
+If you're placing the code directly in your HTML file, it would look something like this:
+
+```html
+<body>
+  <!-- Your HTML content here -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", (event) => {
+      const modal = document.getElementById("modal");
+      const imgs = document.querySelectorAll(".airplane_imgURL");
+      const modalImg = document.getElementById("img01");
+      const captionText = document.getElementById("caption");
+
+      imgs.forEach((img) => {
+        img.onclick = function (event) {
+          event.preventDefault(); // Prevent the default action
+          console.log("image clicked");
+          modal.style.display = "block";
+
+          // Get the nNumber value from the clicked image
+          const nNumber = img.getAttribute("data-nNumber");
+
+          // Construct the image source based on the nNumber value
+          modalImg.src = `resources/${nNumber}.jpeg`;
+
+          captionText.innerHTML = img.alt;
+        };
+      });
+    });
+  </script>
+</body>
+```
+
+This code will wait until the DOM is fully loaded, then it will add an `onclick` event to each image with the class `airplane_imgURL`. When an image is clicked, it will open a modal and display a larger version of the image.
+
+smith-ryant: does this go in the script file? function openModal(src) {
+
+GitHub Copilot: Yes, the `openModal(src)` function should be placed in the same JavaScript file (`script.js`) where you have your `DOMContentLoaded` event listener. 
+
+Here's how you can add it:
+
+```javascript
+function openModal(src) {
+  // Get the modal
+  var modal = document.getElementById('myModal');
+
+  // Get the image and insert it inside the modal
+  var img = document.getElementById('img01');
+  img.src = src;
+
+  // Get the <span> element
+
+ that
+
+ closes the modal
+  var span = document.getElementsByClassName('close')[0];
+
+  // Show the modal
+  modal.style.display = "block";
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() { 
+    modal.style.display = "none";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", (event) => {
+  const modal = document.getElementById("modal");
+  const imgs = document.querySelectorAll(".airplane_imgURL");
+  const modalImg = document.getElementById("img01");
+  const captionText = document.getElementById("caption");
+
+  imgs.forEach((img) => {
+    img.onclick = function (event) {
+      event.preventDefault(); // Prevent the default action
+      console.log("image clicked");
+      modal.style.display = "block";
+
+      // Get the nNumber value from the clicked image
+      const nNumber = img.getAttribute("data-nNumber");
+
+      // Construct the image source based on the nNumber value
+      modalImg.src = `resources/${nNumber}.jpeg`;
+
+      captionText.innerHTML = img.alt;
+    };
+  });
+});
+```
+
+However, it seems like you have two different modal implementations in your code. The `openModal(src)` function is one implementation, and the `DOMContentLoaded` event listener is another. You should choose one implementation and remove the other to avoid confusion and potential bugs.
+
+smith-ryant: Uncaught TypeError: Cannot set properties of null (setting 'src')
+    at openModal (script.js:7:11)
+    at HTMLImageElement.onclick ((index):40:2)
+openModal @ script.js:7
+onclick @ (index):40
+
+GitHub Copilot: The error message "Uncaught TypeError: Cannot set properties of null (setting 'src')" indicates that the JavaScript interpreter is trying to set the `src` property of an object that is `null`. In this case, it seems like `img` is `null`.
+
+This error typically occurs when you're trying to access an HTML element using `document.getElementById` or similar methods before the element is available in the DOM.
+
+In your case, the error is happening at this line:
+
+```javascript
+const img
+
+ =
+
+ document.getElementById("img01");
+img.src = src;
+```
+
+This suggests that there's no element with the id `img01` in your HTML at the time this code is running.
+
+Here are a few things you can check:
+
+1. Make sure that the id `img01` is correctly spelled and matches exactly with the id in your HTML. Remember that ids are case-sensitive.
+
+2. Make sure that the `openModal` function is called after the DOM has fully loaded. You can ensure this by placing your script tag right before the closing `</body>` tag in your HTML, or by putting your JavaScript code inside a `DOMContentLoaded` event listener, like you've done with the rest of your code.
+
+3. If `img01` is dynamically generated (for example, if it's created by JavaScript code and added to the DOM after the page loads), make sure that `openModal` is called after the element is added to the DOM.
+
+smith-ryant: i have a resources dir located in the same dir as the index.html file. it contains the images for the aircraft on the cards. 
+
+GitHub Copilot: Based on the code you've provided, it seems like you're correctly setting the `src` attribute of `modalImg` (which is the image in the modal) to the path of the clicked image. The path is constructed using the `nNumber` data attribute of the clicked image.
+
+However, if you're still getting the error "Uncaught TypeError: Cannot set properties of null (setting 'src')", it means that `modalImg` is `null` at the time this code is running. This suggests that there's no element with the id `img01` in your HTML at the time this code is running.
+
+Here are a few things you can check:
+
+1. Make sure that the id `img01` is correctly spelled and matches exactly with the id in your HTML. Remember that ids are case-sensitive.
+
+2. Make sure that the `DOMContentLoaded` event listener is called after the DOM has fully loaded. You can ensure this by placing your script tag right before the closing `</body>` tag in your HTML.
+
+3. If `img01` is dynamically generated (for example, if it's created by JavaScript code and added to the DOM after the page loads), make sure that the `DOMContentLoaded` event listener is called after the element is added to the DOM.
+
+If none of these suggestions solve the problem, please provide the HTML code for the modal and the images, and I'll be able to help you further.
+
+smith-ryant: there is no img01, i want to click on the image and it look in the resources file for the correct image based on the nNumber.
+
+GitHub Copilot: Based on your HTML and requirements, you can modify your JavaScript code to open the modal and display the correct image when an airplane image is clicked. Here's how you can do it:
+
+```javascript
+document.addEventListener("DOMContentLoaded", (event) => {
+  const modal = document.getElementById("modal");
+  const imgs = document.querySelectorAll(".airplane_imgURL");
+  const modalImg = document.querySelector("#modal .modal-content");
+  const captionText = document.getElementById("caption");
+
+  imgs.forEach((img) => {
+    img.onclick = function (event) {
+      event.preventDefault(); // Prevent the default action
+      console.log("image clicked");
+      modal.style.display = "block";
+
+      // Get the nNumber value from the clicked image
+      const nNumber = img.getAttribute("data-nNumber");
+
+      // Construct the image source based on the nNumber value
+      modalImg.src = `resources/${nNumber}.jpeg`;
+
+      captionText.innerHTML = img.alt;
+    };
+  });
+
+  // Get the <span> element that closes the modal
+  var span = document.querySelector("#modal .close");
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() { 
+    modal.style.display = "none";
+  }
+});
+```
+
+This code will wait until the DOM is fully loaded, then it will add an `onclick` event to each image with the class `airplane_imgURL`. When an image is clicked, it will open a modal and display a larger version of the image. The image source is constructed based on the `nNumber` data attribute of the clicked image. The modal can be closed by clicking on a `<span>` element with the class 'close'.
+
+smith-ryant: here is my current script.js: function openModal(src) {
+  //Get the modal
+  const modal = document.getElementById("myModal");
+
+  //Get the image and insert it inside the modal - use its "alt" text as a caption
+  const img = document.getElementById("img01");
+  img.src = src;
+
+  //Get the <span> element that closes the modal
+  const span = document.getElementsByClassName("close")[0];
+
+  //Show the modal
+  modal.style.display = "block";
+
+  //When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+}
+
+document.addEventListener("DOMContentLoaded", (event) => {
+  const modal = document.getElementById("modal");
+  const imgs = document.querySelectorAll(".airplane_imgURL");
+  const modalImg = document.getElementById("img01");
+  const captionText = document.getElementById("caption");
+
+  imgs.forEach((img) => {
+    img.onclick = function (event) {
+      event.preventDefault(); // Prevent the default action
+      console.log("image clicked");
+      modal.style.display = "block";
+
+      // Get the nNumber value from the clicked image
+      const nNumber = img.getAttribute("data-nNumber");
+
+      // Construct the image source based on the nNumber value
+      modalImg.src = `resources/${nNumber}.jpeg`;
+
+      captionText.innerHTML = img.alt;
+    };
+  });
+});
+
+GitHub Copilot: Based on your requirements and the provided code, it seems like there's a confusion between the `openModal` function and the `DOMContentLoaded` event listener. Both are trying to do similar things (showing a modal when an image is clicked), but they're using different elements and ids.
+
+Here's a revised version of your code that should work based on your requirements:
+
+```javascript
+document.addEventListener("DOMContentLoaded", (event) => {
+  const modal = document.getElementById("myModal");
+  const imgs = document.querySelectorAll(".airplane_imgURL");
+  const modalImg = document.querySelector("#myModal .modal-content");
+  const captionText = document.getElementById("caption");
+
+  imgs.forEach((img) => {
+    img.onclick = function (event) {
+      event.preventDefault(); // Prevent the default action
+      console.log("image clicked");
+
+      // Get the nNumber value from the clicked image
+      const nNumber = img.getAttribute("data-nNumber");
+
+      // Construct the image source based on the nNumber value
+      modalImg.src = `resources/${nNumber}.jpeg`;
+
+      // Use the alt text of the image as the caption
+      captionText.innerHTML = img.alt;
+
+      // Show the modal
+      modal.style.display = "block";
+    };
+  });
+
+  // Get the <span> element that closes the modal
+  const span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+});
+```
+
+This code waits until the DOM is fully loaded, then it adds an `onclick` event to each image with the class `airplane_imgURL`. When an image is clicked, it gets the `nNumber` data attribute from the clicked image, constructs the image source based on this `nNumber` value, sets this source to the image in the modal, sets the alt text of the clicked image as the caption, and shows the modal. The modal can be closed by clicking on a `<span>` element with the class 'close'.
+
+smith-ryant: before i change any more code, what would you need to see to make sure that there is no confusion?
+
+GitHub Copilot: To provide the most accurate assistance, I would need to see:
+
+1. The HTML structure of your modal. This would include the HTML for the modal itself, the close button, and the image within the modal. This will help me understand how your modal is structured and how to correctly select and manipulate its elements.
+
+2. The HTML structure of your airplane images. This would include the HTML for the images that, when clicked, should open the modal. This will help me understand how to correctly select these images and get the necessary data from them.
+
+3. The full JavaScript code that you're currently using. You've provided some of it, but I want to make sure I'm not missing any important parts.
+
+4. Any specific error messages you're seeing in the console when you try to click an airplane image and open the modal.
+
+With this information, I can provide more accurate and specific advice on how to modify your code to meet your requirements.
+
+smith-ryant: here is the html: <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <h1>Aircraft Viewer</h1>
+    </header>
+    <main>
+      <form id="addAirplane_form">
+        <input type="text" id="nNumber" placeholder="nNumber" />
+        <input type="text" id="airplane_year" placeholder="airplane_year" />
+        <input type="text" id="airplane_make" placeholder="airplane_make" />
+        <input type="text" id="airplane_model" placeholder="airplane_model" />
+        <input type="text" id="aiplane_price" placeholder="airplane_price" />
+        <input type="text" id="airplane_imgURL" placeholder="airplane_imgURL" />
+        <button>Add Aircraft</button>
+      </form>
+      <section id="airplane_container">
+        <a href="#modal" class="modal-link">
+          <img src="" class="airplane_imgURL" />
+        </a>
+
+        <div id="modal" class="modal">
+          <span class="close">&times;</span>
+          <img class="modal-content" id="img01" />
+          <div id="caption"></div>
+        </div>
+      </section>
+    </main>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./main.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+
+GitHub Copilot: Thank you for providing the HTML. Based on this, I can see that the modal and the images are structured as expected. However, the image within the modal has an id of `img01`, which is not being used in your JavaScript code. 
+
+Here's a revised version of your JavaScript code that should work based on your requirements:
+
+```javascript
+document.addEventListener("DOMContentLoaded", (event) => {
+  const modal = document.getElementById("modal");
+  const imgs = document.querySelectorAll(".airplane_imgURL");
+  const modalImg = document.getElementById("img01");
+  const captionText = document.getElementById("caption");
+
+  imgs.forEach((img) => {
+    img.onclick = function (event) {
+      event.preventDefault(); // Prevent the default action
+      console.log("image clicked");
+      modal.style.display = "block";
+
+      // Get the nNumber value from the clicked image
+      const nNumber = img.getAttribute("data-nNumber");
+
+      // Construct the image source based on the nNumber value
+      modalImg.src = `resources/${nNumber}.jpeg`;
+
+      captionText.innerHTML = img.alt;
+    };
+  });
+
+  // Get the <span> element that closes the modal
+  const span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+});
+```
+
+This code waits until the DOM is fully loaded, then it adds an `onclick` event to each image with the class `airplane_imgURL`. When an image is clicked, it gets the `nNumber` data attribute from the clicked image, constructs the image source based on this `nNumber` value, sets this source to the image in the modal, sets the alt text of the clicked image as the caption, and shows the modal. The modal can be closed by clicking on a `<span>` element with the class 'close'.
+
+smith-ryant: here is my script.js file in its entirety: function openModal(src) {
+  //Get the modal
+  const modal = document.getElementById("myModal");
+
+  //Get the image and insert it inside the modal - use its "alt" text as a caption
+  const img = document.getElementById("img01");
+  img.src = src;
+
+  //Get the <span> element that closes the modal
+  const span = document.getElementsByClassName("close")[0];
+
+  //Show the modal
+  modal.style.display = "block";
+
+  //When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+}
+
+document.addEventListener("DOMContentLoaded", (event) => {
+  const modal = document.getElementById("modal");
+  const imgs = document.querySelectorAll(".airplane_imgURL");
+  const modalImg = document.getElementById("img01");
+  const captionText = document.getElementById("caption");
+
+  imgs.forEach((img) => {
+    img.onclick = function (event) {
+      event.preventDefault(); // Prevent the default action
+      console.log("image clicked");
+      modal.style.display = "block";
+
+      // Get the nNumber value from the clicked image
+      const nNumber = img.getAttribute("data-nNumber");
+
+      // Construct the image source based on the nNumber value
+      modalImg.src = `resources/${nNumber}.jpeg`;
+
+      captionText.innerHTML = img.alt;
+    };
+  });
+});
+
+GitHub Copilot: Thank you for providing the full JavaScript code. It seems like there's a confusion between the `openModal` function and the `DOMContentLoaded` event listener. Both are trying to do similar things (showing a modal when an image is clicked), but they're using different elements and ids.
+
+Here's a revised version of your code that should work based on your requirements:
+
+```javascript
+document.addEventListener("DOMContentLoaded", (event) => {
+  const modal = document.getElementById("myModal");
+  const imgs = document.querySelectorAll(".airplane_imgURL");
+  const modalImg = document.getElementById("img01");
+  const captionText = document.getElementById("caption");
+
+  imgs.forEach((img) => {
+    img.onclick = function (event) {
+      event.preventDefault(); // Prevent the default action
+      console.log("image clicked");
+      modal.style.display = "block";
+
+      // Get the nNumber value from the clicked image
+      const nNumber = img.getAttribute("data-nNumber");
+
+      // Construct the image source based on the nNumber value
+      modalImg.src = `resources/${nNumber}.jpeg`;
+
+      captionText.innerHTML = img.alt;
+    };
+  });
+
+  // Get the <span> element that closes the modal
+  const span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+});
+```
+
+This code waits until the DOM is fully loaded, then it adds an `onclick` event to each image with the class `airplane_imgURL`. When an image is clicked, it gets the `nNumber` data attribute from the clicked image, constructs the image source based on this `nNumber` value, sets this source to the image in the modal, sets the alt text of the clicked image as the caption, and shows the modal. The modal can be closed by clicking on a `<span>` element with the class 'close'.
+
+smith-ryant: you seem unsure. let me provide both files for you to review at once.
+
+GitHub Copilot: Sure, please provide both files. I'll review them and provide the most accurate assistance based on the complete context.
+
+smith-ryant: html: <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <h1>Aircraft Viewer</h1>
+    </header>
+    <main>
+      <form id="addAirplane_form">
+        <input type="text" id="nNumber" placeholder="nNumber" />
+        <input type="text" id="airplane_year" placeholder="airplane_year" />
+        <input type="text" id="airplane_make" placeholder="airplane_make" />
+        <input type="text" id="airplane_model" placeholder="airplane_model" />
+        <input type="text" id="aiplane_price" placeholder="airplane_price" />
+        <input type="text" id="airplane_imgURL" placeholder="airplane_imgURL" />
+        <button>Add Aircraft</button>
+      </form>
+      <section id="airplane_container">
+        <a href="#modal" class="modal-link">
+          <img src="" class="airplane_imgURL" />
+        </a>
+
+        <div id="modal" class="modal">
+          <span class="close">&times;</span>
+          <img class="modal-content" id="img01" />
+          <div id="caption"></div>
+        </div>
+      </section>
+    </main>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./main.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+javascript: function openModal(src) {
+  //Get the modal
+  const modal = document.getElementById("myModal");
+
+  //Get the image and insert it inside the modal - use its "alt" text as a caption
+  const img = document.getElementById("img01");
+  img.src = src;
+
+  //Get the <span> element that closes the modal
+  const span = document.getElementsByClassName("close")[0];
+
+  //Show the modal
+  modal.style.display = "block";
+
+  //When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+}
+
+document.addEventListener("DOMContentLoaded", (event) => {
+  const modal = document.getElementById("modal");
+  const imgs = document.querySelectorAll(".airplane_imgURL");
+  const modalImg = document.getElementById("img01");
+  const captionText = document.getElementById("caption");
+
+  imgs.forEach((img) => {
+    img.onclick = function (event) {
+      event.preventDefault(); // Prevent the default action
+      console.log("image clicked");
+      modal.style.display = "block";
+
+      // Get the nNumber value from the clicked image
+      const nNumber = img.getAttribute("data-nNumber");
+
+      // Construct the image source based on the nNumber value
+      modalImg.src = `resources/${nNumber}.jpeg`;
+
+      captionText.innerHTML = img.alt;
+    };
+  });
+});
+
+
+GitHub Copilot: Thank you for providing both the HTML and JavaScript files. I see that there's a discrepancy between the IDs used in the HTML and JavaScript files. 
+
+In your JavaScript file, you're trying to get the modal element with `document.getElementById("myModal")` in the `openModal` function, but there's no element with the ID `myModal` in your HTML. The modal in your HTML has the ID `modal`.
+
+Also, the `openModal` function is never called in your JavaScript file. If you want to use this function, you should call it inside the `img.onclick` function.
+
+Here's a revised version of your JavaScript code:
+
+```javascript
+function openModal(src) {
+  //Get the modal
+  const modal = document.getElementById("modal");
+
+  //Get the image and insert it inside the modal - use its "alt" text as a caption
+  const img = document.getElementById("img01");
+  img.src = src;
+
+  //Get the <span> element that closes
+
+ the
+
+ modal
+  const span = document.getElementsByClassName("close")[0];
+
+  //Show the modal
+  modal.style.display = "block";
+
+  //When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+}
+
+document.addEventListener("DOMContentLoaded", (event) => {
+  const imgs = document.querySelectorAll(".airplane_imgURL");
+  const captionText = document.getElementById("caption");
+
+  imgs.forEach((img) => {
+    img.onclick = function (event) {
+      event.preventDefault(); // Prevent the default action
+      console.log("image clicked");
+
+      // Get the nNumber value from the clicked image
+      const nNumber = img.getAttribute("data-nNumber");
+
+      // Construct the image source based on the nNumber value
+      const src = `resources/${nNumber}.jpeg`;
+
+      // Open the modal with the constructed source
+      openModal(src);
+
+      captionText.innerHTML = img.alt;
+    };
+  });
+});
+```
+
+This code waits until the DOM is fully loaded, then it adds an `onclick` event to each image with the class `airplane_imgURL`. When an image is clicked, it gets the `nNumber` data attribute from the clicked image, constructs the image source based on this `nNumber` value, and calls the `openModal` function with this source. The `openModal` function sets this source to the image in the modal, shows the modal, and sets the alt text of the clicked image as the caption. The modal can be closed by clicking on a `<span>` element with the class 'close'.
+
+smith-ryant: script.js:7 Uncaught TypeError: Cannot set properties of null (setting 'src')
+    at openModal (script.js:7:11)
+    at HTMLImageElement.onclick ((index):40:2) I received this message as a result of running my code. html:<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <h1>Aircraft Viewer</h1>
+    </header>
+    <main>
+      <form id="addAirplane_form">
+        <input type="text" id="nNumber" placeholder="nNumber" />
+        <input type="text" id="airplane_year" placeholder="airplane_year" />
+        <input type="text" id="airplane_make" placeholder="airplane_make" />
+        <input type="text" id="airplane_model" placeholder="airplane_model" />
+        <input type="text" id="aiplane_price" placeholder="airplane_price" />
+        <input type="text" id="airplane_imgURL" placeholder="airplane_imgURL" />
+        <button>Add Aircraft</button>
+      </form>
+      <section id="airplane_container">
+        <a href="#modal" class="modal-link">
+          <img src="" class="airplane_imgURL" />
+        </a>
+
+        <div id="modal" class="modal">
+          <span class="close">&times;</span>
+          <img class="modal-content" id="img01" />
+          <div id="caption"></div>
+        </div>
+      </section>
+    </main>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./main.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+and here is the script.js: function openModal(src) {
+  //Get the modal
+  const modal = document.getElementById("modal");
+
+  //Get the image and insert it inside the modal - use its "alt" text as a caption
+  const img = document.getElementById("img01");
+  img.src = src;
+
+  //Get the <span> element that closes the modal
+  const span = document.getElementsByClassName("close")[0];
+
+  //Show the modal
+  modal.style.display = "block";
+
+  //When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+}
+
+document.addEventListener("DOMContentLoaded", (event) => {
+  const imgs = document.querySelectorAll(".airplane_imgURL");
+  const captionText = document.getElementById("caption");
+
+  imgs.forEach((img) => {
+    img.onclick = function (event) {
+      event.preventDefault(); // Prevent the default action
+      console.log("image clicked");
+
+      // Get the nNumber value from the clicked image
+      const nNumber = img.getAttribute("data-nNumber");
+
+      // Construct the image source based on the nNumber value
+      const src = `resources/${nNumber}.jpeg`;
+
+      //Open the modal with the constructed image source
+      openModal(src);
+
+      captionText.innerHTML = img.alt;
+    };
+  });
+});
+
+
+GitHub Copilot: The error message "Uncaught TypeError: Cannot set properties of null (setting 'src')" indicates that the JavaScript is trying to set the 'src' property of a null object. In this case, it seems like `document.getElementById("img01")` is returning null, which means there is no element with the id 'img01' in your HTML when the JavaScript code is executed.
+
+Looking at your HTML, I see that you do have an image with the id 'img01'. However, the script tag that includes your JavaScript file is located before this image in the HTML. This means that when the JavaScript file is loaded and executed, the image with the id 'img01' has not been loaded yet, so `document.getElementById("img01")` returns null.
+
+To fix this issue, you can move the script tag that includes your JavaScript file to the end of the body in your HTML. This way, all the HTML elements will be loaded before the JavaScript file is executed.
+
+Here's how you can modify your HTML:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <h1>Aircraft Viewer</h1>
+    </header>
+    <main>
+      <form id="addAirplane_form">
+        <input type="text" id="nNumber" placeholder="nNumber" />
+        <input type="text" id="airplane_year" placeholder="airplane_year" />
+        <input type="text" id="airplane_make" placeholder="airplane_make" />
+        <input type="text" id="airplane_model" placeholder="airplane_model" />
+        <input type="text" id="aiplane_price" placeholder="airplane_price" />
+        <input type="text" id="airplane_imgURL" placeholder="airplane_imgURL" />
+        <button>Add Aircraft</button>
+      </form>
+      <section id="airplane_container">
+        <a href="#modal" class="modal-link">
+          <img src="" class="airplane_imgURL" />
+        </a>
+
+        <div id="modal" class="modal">
+          <span class="close">&times;</span>
+          <img class="modal-content" id="img01" />
+          <div id="caption"></div>
+        </div>
+      </section>
+    </main>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./main.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+```
+
+This should resolve the error you're seeing.
+
+smith-ryant: Uncaught TypeError: Cannot set properties of null (setting 'src')
+    at openModal (script.js:7:11)
+    at HTMLImageElement.onclick ((index):40:2) I am receiving this error. I am sure there is a mismatched id or something in my code causing this. here is my html: <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <h1>Aircraft Viewer</h1>
+    </header>
+    <main>
+      <form id="addAirplane_form">
+        <input type="text" id="nNumber" placeholder="nNumber" />
+        <input type="text" id="airplane_year" placeholder="airplane_year" />
+        <input type="text" id="airplane_make" placeholder="airplane_make" />
+        <input type="text" id="airplane_model" placeholder="airplane_model" />
+        <input type="text" id="aiplane_price" placeholder="airplane_price" />
+        <input type="text" id="airplane_imgURL" placeholder="airplane_imgURL" />
+        <button>Add Aircraft</button>
+      </form>
+      <section id="airplane_container">
+        <a href="#modal" class="modal-link">
+          <img src="" class="airplane_imgURL" />
+        </a>
+
+        <div id="modal" class="modal">
+          <span class="close">&times;</span>
+          <img class="modal-content" id="img01" />
+          <div id="caption"></div>
+        </div>
+      </section>
+    </main>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./main.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+and here is my script: function openModal(src) {
+  //Get the modal
+  const modal = document.getElementById("modal");
+
+  //Get the image and insert it inside the modal - use its "alt" text as a caption
+  const img = document.getElementById("img01");
+  img.src = src;
+
+  //Get the <span> element that closes the modal
+  const span = document.getElementsByClassName("close")[0];
+
+  //Show the modal
+  modal.style.display = "block";
+
+  //When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+}
+
+document.addEventListener("DOMContentLoaded", (event) => {
+  const imgs = document.querySelectorAll(".airplane_imgURL");
+  const captionText = document.getElementById("caption");
+
+  imgs.forEach((img) => {
+    img.onclick = function (event) {
+      event.preventDefault(); // Prevent the default action
+      console.log("image clicked");
+
+      // Get the nNumber value from the clicked image
+      const nNumber = img.getAttribute("data-nNumber");
+
+      // Construct the image source based on the nNumber value
+      const src = `resources/${nNumber}.jpeg`;
+
+      //Open the modal with the constructed image source
+      openModal(src);
+
+      captionText.innerHTML = img.alt;
+    };
+  });
+});
+
+
+GitHub Copilot: The error message "Uncaught TypeError: Cannot set properties of null (setting 'src')" indicates that the JavaScript is trying to set the 'src' property of a null object. In this case, it seems like `document.getElementById("img01")` is returning null, which means there is no element with the id 'img01' in your HTML when the JavaScript code is executed.
+
+Looking at your HTML, I see that you do have an image with the id 'img01'. However, the script tag that includes your JavaScript file is located before this image in the HTML. This means that when the JavaScript file is loaded and executed, the image with the id 'img01' has not been loaded yet, so `document.getElementById("img01")` returns null.
+
+To fix this issue, you can move the script tag that includes your JavaScript file to the end of the body in your HTML. This way, all the HTML elements will be loaded before the JavaScript file is executed.
+
+Here's how you can modify your HTML:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <h1>Aircraft Viewer</h1>
+    </header>
+    <main>
+      <form id="addAirplane_form">
+        <input type="text" id="nNumber" placeholder="nNumber" />
+        <input type="text" id="airplane_year" placeholder="airplane_year" />
+        <input type="text" id="airplane_make" placeholder="airplane_make" />
+        <input type="text" id="airplane_model" placeholder="airplane_model" />
+        <input type="text" id="aiplane_price" placeholder="airplane_price" />
+        <input type="text" id="airplane_imgURL" placeholder="airplane_imgURL" />
+        <button>Add Aircraft</button>
+      </form>
+      <section id="airplane_container">
+        <a href="#modal" class="modal-link">
+          <img src="" class="airplane_imgURL" />
+        </a>
+
+        <div id="modal" class="modal">
+          <span class="close">&times;</span>
+          <img class="modal-content" id="img01" />
+          <div id="caption"></div>
+        </div>
+      </section>
+    </main>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./main.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+```
+
+This should resolve the error you're seeing.
+
+smith-ryant: it is already at the bottom. explain the img01. What is it, what is producing it, and what is it trying to populate?
+
+GitHub Copilot: In your JavaScript code, `img01` is the id of an HTML image element that you're trying to manipulate. 
+
+Here's a breakdown of what's happening:
+
+1. `const img = document.getElementById("img01");` - This line is trying to get the HTML image element with the id of 'img01'. It's using the `document.getElementById()` function, which returns the first element in the document with the specified id, in this case 'img01'.
+
+2. `img.src = src;` - This line is trying to set the 'src' attribute of the 'img01' image element to the value of the 'src' variable. The 'src' attribute specifies the source URL for an image.
+
+3. The 'src' variable is passed as an argument to the `openModal(src)` function. In the context of your code, 'src' is constructed based on the 'nNumber' value of the clicked image: `const src = `resources/${nNumber}.jpeg`;`.
+
+4. The 'img01' image element is inside a modal, and the purpose of the `openModal(src)` function is to display this modal with the 'img01' image element showing the image specified by 'src'.
+
+5. If 'img01' is null when `img.src = src;` is executed, it means that there's no element with the id 'img01' in the document at the time this code is run. This would cause the "Uncaught TypeError: Cannot set properties of null (setting 'src')" error you're seeing.
+
+In your HTML, the 'img01' image element is defined here:
+
+```html
+<div id="modal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01" />
+  <div id="caption"></div>
+</div>
+```
+
+It's an image element with the id 'img01', and it's intended to be the content of a modal that's shown when an image is clicked.
+
+smith-ryant: is img01 the name of the image inside of the modal? my images are not called that.
+
+GitHub Copilot: Yes, `img01` is the id of the image element inside the modal, not the name of the image file. 
+
+In your HTML, you have this line:
+
+```html
+<img class="modal-content" id="img01" />
+```
+
+This creates an image element with the id `img01`. This id is used in your JavaScript to select this image element and change its `src` attribute to display a different image when the modal is opened.
+
+The line `img.src = src;` in your JavaScript doesn't refer to the name of an image file, but to the `src` attribute of the image element with id `img01`. The `src` attribute is used to specify the source file for the image element, which is the image that will be displayed.
+
+The actual image file that will be displayed is determined by the `src` variable, which is passed to the `openModal(src)` function. In your code, `src` is constructed based on the `nNumber` attribute of the clicked image:
+
+```javascript
+const nNumber = img.getAttribute("data-nNumber");
+const src = `resources/${nNumber}.jpeg`;
+```
+
+So if the `nNumber` attribute of the clicked image is "123", `src` will be "resources/123.jpeg", and this is the image file that will be displayed in the modal.
+
+smith-ryant: so you are telling me that this code is correct and it should display my images larger, when clicked in the airplane card?
+
+GitHub Copilot: Yes, the code you've provided should work as intended, assuming a few conditions are met:
+
+1. The images you want to display in the modal have the class `airplane_imgURL`.
+2. Each of these images has a `data-nNumber` attribute that corresponds to the name of an image file in the `resources/` directory. For example, if an image has `data-nNumber="123"`, there should be a file named `123.jpeg` in the `resources/` directory.
+3. The modal HTML structure is correct and includes an image element with the id `img01`.
+
+When an image with the class `airplane_imgURL` is clicked, the `openModal(src)` function is called with `src` set to the path of the corresponding image in the `resources/` directory. This function then sets the `src` attribute of the `img01` image element to this path, causing the image to be displayed in the modal.
+
+If these conditions are met and the images are still not being displayed in the modal, there might be an issue elsewhere in your code. You could try debugging by adding `console.log` statements in your JavaScript to check the values of `src`, `img`, and other variables.
+
+smith-ryant: Each of these images has a data-nNumber attribute that corresponds to the name of an image file in the resources/ directory. How is this done? I am a bit confused on the data-nNumber.
+
+GitHub Copilot: The `data-nNumber` attribute is a custom data attribute that you can use to store extra information on HTML elements. In your case, it's used to store a value that corresponds to the name of an image file in the `resources/` directory.
+
+Here's an example of how you might use it:
+
+```html
+<img src="small-image-123.jpeg" class="airplane_imgURL" data-nNumber="123" />
+```
+
+In this example, the `data-nNumber` attribute is set to "123". When this image is clicked, your JavaScript code retrieves this value, constructs a path to the corresponding image in the `resources/` directory (`resources/123.jpeg`), and sets this as the `src` attribute of the `img01` image element in the modal.
+
+To add the `data-nNumber` attribute to your images, you would need to modify the HTML for each image. If you're generating the HTML for the images dynamically (for example, by fetching data from a server), you would need to modify your JavaScript code to include the `data-nNumber` attribute with the correct value for each image.
+
+Here's an example of how you might do this in JavaScript:
+
+```javascript
+const airplaneContainer = document.getElementById('airplane_container');
+
+// Assuming airplanes is an array of objects, each with an nNumber property
+airplanes.forEach(airplane => {
+  const img = document.createElement('img');
+  img.src = `small-image-${airplane.nNumber}.jpeg`;
+  img.className = 'airplane_imgURL';
+  img.dataset.nNumber = airplane.nNumber; // This sets the data-nNumber attribute
+
+  airplaneContainer.appendChild(img);
+});
+```
+
+In this example, `airplanes` is an array of objects, each representing an airplane and having an `nNumber` property. The code creates an image element for each airplane, sets the `src` and `class` attributes, and also sets the `data-nNumber` attribute to the `nNumber` of the airplane. The image elements are then added to the `airplane_container` section.
+
+smith-ryant: so in my case, as in the html, why do we use data-nNumber and not nNumber as defined in line 15 of the index.html, <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <h1>Aircraft Viewer</h1>
+    </header>
+    <main>
+      <form id="addAirplane_form">
+        <input type="text" id="nNumber" placeholder="nNumber" />
+        <input type="text" id="airplane_year" placeholder="airplane_year" />
+        <input type="text" id="airplane_make" placeholder="airplane_make" />
+        <input type="text" id="airplane_model" placeholder="airplane_model" />
+        <input type="text" id="aiplane_price" placeholder="airplane_price" />
+        <input type="text" id="airplane_imgURL" placeholder="airplane_imgURL" />
+        <button>Add Aircraft</button>
+      </form>
+      <section id="airplane_container">
+        <a href="#modal" class="modal-link">
+          <img src="" class="airplane_imgURL" />
+        </a>
+
+        <div id="modal" class="modal">
+          <span class="close">&times;</span>
+          <img class="modal-content" id="img01" />
+          <div id="caption"></div>
+        </div>
+      </section>
+    </main>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./main.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+
+GitHub Copilot: The `nNumber` in line 15 of your HTML is the id of an input field in a form, not an attribute of an image. This input field is likely used to collect the `nNumber` from the user when adding a new aircraft.
+
+On the other hand, `data-nNumber` is a custom data attribute that you can add to any HTML element to store extra information. In this case, it's being suggested as a way to associate each image with its corresponding `nNumber`.
+
+The reason for using `data-nNumber` instead of `nNumber` as an attribute of the image is that `nNumber` is not a standard attribute for the `img` tag, and using it could cause confusion or unexpected behavior. The `data-` prefix is a way to define custom data attributes according to the HTML specification.
+
+So, in your JavaScript code, when an image is clicked, you can retrieve the `data-nNumber` attribute from the clicked image to know which `nNumber` it's associated with, and then use that to construct the path to the larger image to display in the modal.
+
+Here's an example of how you might add the `data-nNumber` attribute to an image:
+
+```html
+<img src="small-image-123.jpeg" class="airplane_imgURL" data-nNumber="123" />
+```
+
+In this example, the `data-nNumber` attribute is set to "123". When this image is clicked, your JavaScript code retrieves this value, constructs a path to the corresponding image in the `resources/` directory (`resources/123.jpeg`), and sets this as the `src` attribute of the `img01` image element in the modal.
+
+smith-ryant: so where does this code go? <img src="small-image-123.jpeg" class="airplane_imgURL" data-nNumber="123" />
+
+GitHub Copilot: The `<img>` tag with the `data-nNumber` attribute should replace the existing `<img>` tag inside the `<a>` tag in the `airplane_container` section of your HTML. 
+
+However, since your application seems to be dynamic (i.e., you're likely adding airplanes through the form and then displaying them), you would typically add this tag dynamically using JavaScript when you add a new airplane. 
+
+Here's an example of how you might do this in JavaScript:
+
+```javascript
+// Assuming you have a function to add a new airplane
+function addAirplane(nNumber, year, make, model, price, imgURL) {
+  // Create a new img element
+  const img = document.createElement('img');
+  
+  // Set the src, class, and data-nNumber attributes
+  img.src = imgURL;
+  img.className = 'airplane_imgURL';
+  img.dataset.nNumber = nNumber;
+
+  // Create a new a element
+  const a = document.createElement('a');
+  a.href = "#modal";
+  a.className = "modal-link";
+
+  // Append the img element to the a element
+  a.appendChild(img);
+
+  // Get the airplane_container section
+  const airplaneContainer = document.getElementById('airplane_container');
+
+  // Append the a element to the airplane_container section
+  airplaneContainer.appendChild(a);
+}
+```
+
+In this function, you create a new `<img>` element, set its `src`, `class`, and `data-nNumber` attributes, and then append it to a new `<a>` element. You then append this `<a>` element to the `airplane_container` section. 
+
+You would call this function whenever you want to add a new airplane, passing the `nNumber`, `year`, `make`, `model`, `price`, and `imgURL` as arguments. The `nNumber` would also be used as the value for the `data-nNumber` attribute.
+
+smith-ryant:  <section id="airplane_container">
+        <a href="#modal" class="modal-link">
+          <img src="" class="airplane_imgURL" data-nNumber="" />
+        </a>, like this?
+
+GitHub Copilot: Yes, that's correct. You've added the `data-nNumber` attribute to the `img` tag. However, remember that you'll need to dynamically set the `src` and `data-nNumber` attributes when you add a new airplane to the `airplane_container` section.
+
+Here's an example of how you might do this in JavaScript:
+
+```javascript
+// Assuming you have a function to add a new airplane
+function addAirplane(nNumber, imgURL) {
+  // Get the airplane_container section
+  const airplaneContainer = document.getElementById('airplane_container');
+
+  // Get the img element
+  const img = airplaneContainer.querySelector('.airplane_imgURL');
+
+  // Set the src and data-nNumber attributes
+  img.src = imgURL;
+  img.dataset.nNumber = nNumber;
+}
+```
+
+In this function, you get the `img` element from the `airplane_container` section and set its `src` and `data-nNumber` attributes. You would call this function whenever you want to add a new airplane, passing the `nNumber` and `imgURL` as arguments. The `nNumber` would also be used as the value for the `data-nNumber` attribute.
+
+smith-ryant: function createAirplaneCard(airplane) {
+  //create a new div element for the card
+  const airplaneCard = document.createElement("div");
+  airplaneCard.classList.add("airplane_card");
+  //set the html content of the house card element unsing teplate literals
+
+  // Add the nNumber as a data attribute to the card
+  airplaneCard.dataset.nNumber = airplane.nNumber;
+  airplaneCard.innerHTML = `<img alt="photo of airplane" src=${airplane.imgURL} class="airplane_cover_img" onclick="openModal(this.src)" />
+  
+  <p class="airplane_nNumber">${airplane.nNumber}</p>
+  <p class="airplane_year">${airplane.year}</p>
+  <p class="airplane_make">${airplane.make}</p>
+  <p class="airplane_model">${airplane.model}</p>
+  <p class="airplane_price">${airplane.price}</p>
+  
+
+  <div class="container_btns">
+    <button onclick="updateAirplane(${airplane.id}, 'minus')"> - </button>
+    <button onclick="updateAirplane(${airplane.id}, 'plus')"> + </button>
+    <button class="delete_btn onclick="deleteAirplane(${airplane.id}"> Delete </button>
+  </div>
+  `;
+  //appending the airplane card to the airplane container
+  airplaneContainer.appendChild(airplaneCard);
+}
+
+GitHub Copilot: The `createAirplaneCard` function in your JavaScript code is used to create a new airplane card and append it to the `airplaneContainer`. Here's a step-by-step explanation of what the function does:
+
+1. It creates a new `div` element and adds the class `airplane_card` to it.
+2. It sets the `data-nNumber` attribute of the `div` to the `nNumber` of the airplane. This can be used to associate the card with the specific airplane.
+3. It sets the `innerHTML` of the `div` to a template literal that contains the HTML for the airplane card. This includes an `img` element for the airplane image, `p` elements for the `nNumber`, `year`, `make`, `model`, and `price` of the airplane, and a `div` for the buttons to update and delete the airplane.
+4. The `src` attribute of the `img` element is set to the `imgURL` of the airplane, and the `onclick` attribute is set to call the `openModal` function with the `src` of the image when the image is clicked.
+5. The text content of the `p` elements is set to the corresponding properties of the airplane.
+6. The `onclick` attributes of the buttons are set to call the `updateAirplane` and `deleteAirplane` functions with the `id` of the airplane and the operation ('minus' or 'plus' for the update buttons) when the buttons are clicked.
+7. Finally, the `div` is appended to the `airplaneContainer`.
+
+This function is likely called whenever a new airplane is added or the list of airplanes is updated, passing the airplane object as an argument. The airplane object should have `nNumber`, `imgURL`, `year`, `make`, `model`, `price`, and `id` properties.
+
+smith-ryant: main.js:function createAirplaneCard(airplane) {
+  //create a new div element for the card
+  const airplaneCard = document.createElement("div");
+  airplaneCard.classList.add("airplane_card");
+  //set the html content of the house card element unsing teplate literals
+
+  // Add the nNumber as a data attribute to the card
+  airplaneCard.dataset.nNumber = airplane.nNumber;
+  airplaneCard.innerHTML = `<img alt="photo of airplane" src=${airplane.imgURL} class="airplane_cover_img" onclick="openModal(this.src)" />
+  
+  <p class="airplane_nNumber">${airplane.nNumber}</p>
+  <p class="airplane_year">${airplane.year}</p>
+  <p class="airplane_make">${airplane.make}</p>
+  <p class="airplane_model">${airplane.model}</p>
+  <p class="airplane_price">${airplane.price}</p>
+  
+
+  <div class="container_btns">
+    <button onclick="updateAirplane(${airplane.id}, 'minus')"> - </button>
+    <button onclick="updateAirplane(${airplane.id}, 'plus')"> + </button>
+    <button class="delete_btn onclick="deleteAirplane(${airplane.id}"> Delete </button>
+  </div>
+  `;
+  //appending the airplane card to the airplane container
+  airplaneContainer.appendChild(airplaneCard);
+}, index.html: <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <h1>Aircraft Viewer</h1>
+    </header>
+    <main>
+      <form id="addAirplane_form">
+        <input type="text" id="nNumber" placeholder="nNumber" />
+        <input type="text" id="airplane_year" placeholder="airplane_year" />
+        <input type="text" id="airplane_make" placeholder="airplane_make" />
+        <input type="text" id="airplane_model" placeholder="airplane_model" />
+        <input type="text" id="aiplane_price" placeholder="airplane_price" />
+        <input type="text" id="airplane_imgURL" placeholder="airplane_imgURL" />
+        <button>Add Aircraft</button>
+      </form>
+      <section id="airplane_container">
+        <a href="#modal" class="modal-link">
+          <img src="" class="airplane_imgURL" data-nNumber="" />
+        </a>
+
+        <div id="modal" class="modal">
+          <span class="close">&times;</span>
+          <img class="modal-content" id="img01" />
+          <div id="caption"></div>
+        </div>
+      </section>
+    </main>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./main.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>, script.js: function openModal(src) {
+  //Get the modal
+  const modal = document.getElementById("modal");
+
+  //Get the image and insert it inside the modal - use its "alt" text as a caption
+  const img = document.getElementById("img01");
+  img.src = src;
+
+  //Get the <span> element that closes the modal
+  const span = document.getElementsByClassName("close")[0];
+
+  //Show the modal
+  modal.style.display = "block";
+
+  //When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+}
+
+document.addEventListener("DOMContentLoaded", (event) => {
+  const imgs = document.querySelectorAll(".airplane_imgURL");
+  const captionText = document.getElementById("caption");
+
+  imgs.forEach((img) => {
+    img.onclick = function (event) {
+      event.preventDefault(); // Prevent the default action
+      console.log("image clicked");
+
+      // Get the nNumber value from the clicked image
+      const nNumber = img.getAttribute("data-nNumber");
+
+      // Construct the image source based on the nNumber value
+      const src = `resources/${nNumber}.jpeg`;
+
+      //Open the modal with the constructed image source
+      openModal(src);
+
+      captionText.innerHTML = img.alt;
+    };
+  });
+});
+what am i getting this error if all of my labeling is correct? Uncaught TypeError: Cannot set properties of null (setting 'src')
+    at openModal (script.js:7:11)
+    at HTMLImageElement.onclick ((index):40:2)
+
+
+GitHub Copilot: The error message "Uncaught TypeError: Cannot set properties of null (setting 'src')" indicates that the JavaScript is trying to set a property on a `null` value. In this case, it's trying to set the `src` property of an `img` element that is `null`.
+
+In your `openModal` function, you're trying to get an `img` element with the id `img01`:
+
+```javascript
+const img = document.getElementById("img01");
+img.src = src;
+```
+
+The error is occurring because `document.getElementById("img01")` is returning `null`, meaning it can't find any element with the id `img01` in your document.
+
+Looking at your HTML, it seems like you do have an `img` element with the id `img01`:
+
+```html
+<img class="modal-content" id="img01" />
+```
+
+So, the issue might be that your JavaScript is running before your HTML has fully loaded, so when it tries to find the `img` element, the element hasn't been created yet.
+
+To fix this, you can ensure that your JavaScript doesn't run until the HTML has fully loaded. You can do this by moving your script tags just before the closing `</body>` tag in your HTML:
+
+```html
+<body>
+  <!-- Your HTML content -->
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="./main.js"></script>
+  <script src="script.js"></script>
+</body>
+```
+
+This way, the browser will parse and render all of your HTML before it starts running your JavaScript, ensuring that all elements are available when your JavaScript tries to access them.
+
+smith-ryant: I find it ridiculous, that I just posted all of the html code, it is the exact same as yours but you still pretend like it may be a problem. is my script src="script.js'></script not in the exact place you are telling me it should go? I posted the code to you in the question.
+
+GitHub Copilot: I apologize for the confusion. You're correct, your script tags are indeed placed correctly at the end of the body tag in your HTML. 
+
+The error you're seeing is typically due to trying to access an element before it's available in the DOM, but given your scripts are loaded correctly, this might not be the case.
+
+Another possibility could be that the `src` parameter passed to the `openModal` function is `null` or `undefined`. This could happen if the `src` attribute of the image that's clicked is not set or is set to an invalid value.
+
+To debug this, you could add a `console.log(src)` at the beginning of your `openModal` function to check the value of `src` when the function is called:
+
+```javascript
+function openModal(src) {
+  console.log(src); // Add this line
+
+  // Rest of your code...
+}
+```
+
+If `src` is `null` or `undefined`, you'll need to check where `openModal` is called and ensure that a valid `src` value is passed. In your case, it's called in the `onclick` event of the images, so you'll need to check that the `src` attribute of the images is set correctly.
+
+smith-ryant: If src is null or undefined, you'll need to check where openModal is called and ensure that a valid src value is passed. In your case, it's called in the onclick event of the images, so you'll need to check that the src attribute of the images is set correctly. I believe the src file is null as nothing has populated the console. So, how do I figure out why src is null? Where should openModal be called?
+
+GitHub Copilot: The `openModal` function is called in the `onclick` event of the images. In your code, this is happening here:
+
+```javascript
+// Construct the image source based on the nNumber value
+const src = `resources/${nNumber}.jpeg`;
+
+//Open the modal with the constructed image source
+openModal(src);
+```
+
+The `src` value is constructed using the `nNumber` attribute of the clicked image. If `src` is `null`, it could be because `nNumber` is `null` or `undefined`.
+
+To check this, you can add a `console.log(nNumber)` before the `src` is constructed:
+
+```javascript
+// Get the nNumber value from the clicked image
+const nNumber = img.getAttribute("data-nNumber");
+
+console.log(nNumber); // Add this line
+
+// Construct the image source based on the nNumber value
+const src = `resources/${nNumber}.jpeg`;
+
+//Open the modal with the constructed image source
+openModal(src);
+```
+
+If `nNumber` is `null` or `undefined`, it means the `data-nNumber` attribute of the clicked image is not set or is set to an invalid value. You'll need to check where the images are created and ensure that the `data-nNumber` attribute is set correctly.
+
+In your `createAirplaneCard` function, you're setting the `data-nNumber` attribute of the airplane card, but not of the image itself. You should also set it for the image:
+
+```javascript
+airplaneCard.innerHTML = `<img alt="photo of airplane" src=${airplane.imgURL} class="airplane_cover_img" onclick="openModal(this.src)" data-nNumber=${airplane.nNumber} />
+```
+
+This way, when an image is clicked, its `data-nNumber` attribute can be used to construct the `src` value.
+
+smith-ryant: why is src still null? what do you need to see to figure this out?
+
+GitHub Copilot: To figure out why `src` is null, I would need to see the following:
+
+1. The HTML structure of your page, specifically the elements with class `airplane_imgURL` and their `data-nNumber` attributes. This is because the `src` is constructed using the `data-nNumber` attribute of the clicked image.
+
+2. The contents of the `resources` directory. The `src` is constructed by appending the `data-nNumber` attribute value to `resources/` and `.jpeg`. If the corresponding image does not exist in the `resources` directory, the `src` would be a path to a non-existent file, which might be interpreted as `null`.
+
+3. Any error messages in the console. If there are errors in the code before the `src` is set, it might prevent the `src` from being set correctly.
+
+4. The value of `nNumber` just before `src` is set. If `nNumber` is `null` or `undefined`, `src` would also be `null`.
+
+5. The actual value of `src` just after it is set. This can help confirm whether the issue is with setting `src` or with something that happens later.
+
+smith-ryant: describe in detail what is going on here
+
+GitHub Copilot: This JavaScript code is adding an event listener to the DOM (Document Object Model) that waits for the entire HTML document to be fully loaded before executing the enclosed function. This is done to ensure that all the HTML elements are available for JavaScript to interact with.
+
+Here's a step-by-step breakdown of what the code does:
+
+1. `document.addEventListener("DOMContentLoaded", (event) => {...});` - This line adds an event listener to the document that waits for the DOM to be fully loaded. Once the DOM is loaded, the function passed as the second argument is executed.
+
+2. `const imgs = document.querySelectorAll(".airplane_imgURL");` - This line selects all HTML elements with the class `airplane_imgURL` and stores them in the `imgs` variable as a NodeList.
+
+3. `const captionText = document.getElementById("caption");` - This line selects the HTML element with the id `caption` and stores it in the `captionText` variable.
+
+4. `imgs.forEach((img) => {...});` - This line loops over each image in the `imgs` NodeList.
+
+5. Inside the loop, an `onclick` event listener is added to each image. This event listener executes a function when the image is clicked.
+
+6. `event.preventDefault();` - This line prevents the default action of the click event on the image. This is often used to prevent a form submission or hyperlink navigation.
+
+7. `const nNumber = img.getAttribute("data-nNumber");` - This line gets the value of the `data-nNumber` attribute from the clicked image and stores it in the `nNumber` variable.
+
+8. `const src = `resources/${nNumber}.jpeg`;` - This line constructs the source URL for an image using the `nNumber` value. It assumes that the image is located in a directory named `resources` and that the image file has a `.jpeg` extension.
+
+9. `openModal(src);` - This line calls a function named `openModal`, passing the constructed image source URL as an argument. This function is not defined in the provided code, but it presumably opens a modal window and displays the image.
+
+10. `captionText.innerHTML = img.alt;` - This line sets the inner HTML of the `captionText` element to the alt text of the clicked image. This could be used to provide a caption or description for the image in the modal window.
+
+smith-ryant: what is the easiest way to create a modal window that contains an image?
+
+GitHub Copilot: The easiest way to create a modal window that contains an image is to use HTML, CSS, and JavaScript. Here's a simple example:
+
+```html
+<!-- HTML -->
+<div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+```
+
+```css
+/* CSS */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+```
+
+```javascript
+// JavaScript
+function openModal(src) {
+  const modal = document.getElementById('myModal');
+  const modalImg = document.getElementById('img01');
+  const captionText = document.getElementById('caption');
+
+  modal.style.display = "block";
+  modalImg.src = src;
+  captionText.innerHTML = src;
+
+  const span = document.getElementsByClassName("close")[0];
+
+  span.onclick = function() { 
+    modal.style.display = "none";
+  }
+}
+```
+
+In this example, the `openModal` function takes an image source URL as an argument, sets the source of the modal image to this URL, and displays the modal. The modal can be closed by clicking on the span element with the class `close`.
+
+smith-ryant: why do i need this line of code?
+
+GitHub Copilot: This line of code is used to select the HTML element with the id "caption" from the DOM (Document Object Model) and store a reference to it in the variable `captionText`.
+
+```javascript
+const captionText = document.getElementById("caption");
+```
+
+The purpose of this line is to allow JavaScript to interact with this specific HTML element. Once you have a reference to an element, you can read or update its properties. For example, you can change its text content, style it, or attach event listeners to it.
+
+In the context of your previous code, `captionText` is used to display the `alt` text of the clicked image in the modal window. The line `captionText.innerHTML = img.alt;` updates the inner HTML of the `captionText` element to the `alt` attribute of the clicked image. This provides a caption or description for the image in the modal window. Without this line of code, you wouldn't be able to reference and update the "caption" element from your JavaScript code.
+
+smith-ryant: document.addEventListener("DOMContentLoaded", (event) => {
+  const imgs = document.querySelectorAll(".airplane_imgURL");
+  const captionText = document.getElementById("caption");
+
+  imgs.forEach((img) => {
+    img.onclick = function (event) {
+      event.preventDefault(); // Prevent the default action
+      console.log("image clicked");
+
+      // Get the nNumber value from the clicked image
+      const nNumber = img.getAttribute("data-nNumber");
+
+      // Construct the image source based on the nNumber value
+      const src = `resources/${nNumber}.jpeg`;
+
+      //Open the modal with the constructed image source
+      openModal(src);
+
+      captionText.innerHTML = img.alt;
+    };
+  });
+}); what is this code doing? 
+
+GitHub Copilot: This JavaScript code is setting up an event listener for each image with the class `airplane_imgURL` on your webpage. Here's a step-by-step breakdown:
+
+1. `document.addEventListener("DOMContentLoaded", (event) => {...});` - This line sets up an event listener that waits for the entire HTML document to be fully loaded before executing the enclosed function. This is done to ensure that all the HTML elements are available for JavaScript to interact with.
+
+2. `const imgs = document.querySelectorAll(".airplane_imgURL");` - This line selects all HTML elements with the class `airplane_imgURL` and stores them in the `imgs` variable as a NodeList.
+
+3. `const captionText = document.getElementById("caption");` - This line selects the HTML element with the id `caption` and stores it in the `captionText` variable.
+
+4. `imgs.forEach((img) => {...});` - This line loops over each image in the `imgs` NodeList.
+
+5. Inside the loop, an `onclick` event listener is added to each image. This event listener executes a function when the image is clicked.
+
+6. `event.preventDefault();` - This line prevents the default action of the click event on the image. This is often used to prevent a form submission or hyperlink navigation.
+
+7. `const nNumber = img.getAttribute("data-nNumber");` - This line gets the value of the `data-nNumber` attribute from the clicked image and stores it in the `nNumber` variable.
+
+8. `const src = `resources/${nNumber}.jpeg`;` - This line constructs the source URL for an image using the `nNumber` value. It assumes that the image is located in a directory named `resources` and that the image file has a `.jpeg` extension.
+
+9. `openModal(src);` - This line calls a function named `openModal`, passing the constructed image source URL as an argument. This function is not defined in the provided code, but it presumably opens a modal window and displays the image.
+
+10. `captionText.innerHTML = img.alt;` - This line sets the inner HTML of the `captionText` element to the alt text of the clicked image. This could be used to provide a caption or description for the image in the modal window.
+
+smith-ryant: my src is null, and it is producing an error
+
+GitHub Copilot: If `src` is null, it means that the `nNumber` attribute is not being correctly retrieved from the clicked image, or the constructed path to the image does not exist. Here are some steps to debug this issue:
+
+1. Check if the `data-nNumber` attribute is correctly set in your HTML elements with the class `airplane_imgURL`.
+
+2. Log the `nNumber` and `src` variables to the console to verify their values:
+
+```javascript
+const nNumber = img.getAttribute("data-nNumber");
+console.log(nNumber); // Add this line
+const src = `resources/${nNumber}.jpeg`;
+console.log(src); // Add this line
+```
+
+3. Verify that the images are correctly placed in the `resources` directory and their names match the `nNumber` values with a `.jpeg` extension.
+
+4. Ensure that the path to the `resources` directory is correct. If the `resources` directory is not in the same directory as your JavaScript file, you may need to adjust the path.
+
+5. If you're running this on a server, make sure the server is correctly configured to serve static files from the `resources` directory.

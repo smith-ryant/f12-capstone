@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "nNumber": "N25GR",
+    "year": "1996", 
+    "make": "Beechcraft",
+    "model": "C90B King Air", 
+    "price": 2395000,
+    "imgURL": "./resources/N25GR.jpeg"
+  },
+  {
+    "id": 2,
+    "nNumber": "N128JP",
+    "year": "1979", 
+    "make": "Beechcraft",
+    "model": "C90F King Air", 
+    "price": 1195000,
+    "imgURL": "./resources/N128JP.jpeg"
+  },
+  {
+    "id": 3,
+    "nNumber": "N26EM",
+    "year": "2019", 
+    "make": "Piper",
+    "model": "M600",
+    "price": 1750000,
+    "imgURL": "./resources/N26EM.webp"
+  },
+  {
+    "id": 4,
+    "nNumber": "N509JJ",
+    "year": "2022", 
+    "make": "Piper",
+    "model": "M600", 
+    "price": 3750000,
+    "imgURL": "./resources/N509JJ.webp"
+  },
+  {
+    "id": 5,
+    "nNumber": "N34RF",
+    "year": "2016", 
+    "make": "Piper",
+    "model": "M600", 
+    "price": 2525000,
+    "imgURL": "./resources/N34RF.jpeg"
+  }
+]

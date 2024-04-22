@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header></header>
+    <h1>Aircraft Viewer</h1>
+    <main>
+      <form id="addAirplane-form">
+        <input type="text" id="nNumber" placeholder="nNumber" />
+        <input type="text" id="airplane-year" placeholder="airplane-year" />
+        <input type="text" id="airplane-make" placeholder="airplane-make" />
+        <input type="text" id="airplane-model" placeholder="airplane-model" />
+        <input type="text" id="aiplane-price" placeholder="airplane-price" />
+        <input type="text" id="airplane-imgURL" placeholder="airplane-imgURL" />
+        <button>Add Aircraft</button>
+      </form>
+      <section id="airplane-container">
+        <a href="#modal" class="modal-link">
+          <img src="" class="airplane-imgURL" data-nNumber="" />
+        </a>
+
+        <div id="modal" class="modal">
+          <span class="close">&times;</span>
+          <img class="modal-content" id="img01" />
+          <div id="caption"></div>
+        </div>
+      </section>
+    </main>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./main.js"></script>
+    <!-- <script src="script.js"></script> -->
+  </body>
+</html>

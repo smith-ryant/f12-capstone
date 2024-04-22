@@ -1,0 +1,199 @@
+This is my current index.html
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <h1>Aircraft Viewer</h1>
+    </header>
+    <main>
+      <form id="addAirplane_form">
+        <input type="text" id="nNumber" placeholder="nNumber" />
+        <input type="text" id="airplane_year" placeholder="airplane_year" />
+        <input type="text" id="airplane_make" placeholder="airplane_make" />
+        <input type="text" id="airplane_model" placeholder="airplane_model" />
+        <input type="text" id="aiplane_price" placeholder="airplane_price" />
+        <input type="text" id="airplane_imgURL" placeholder="airplane_imgURL" />
+        <button>Add Aircraft</button>
+      </form>
+      <section id="airplane_container">
+        <a href="#modal" class="modal-link">
+          <img src="" class="airplane_imgURL" data-nNumber="" />
+        </a>
+
+        <div id="modal" class="modal">
+          <span class="close">&times;</span>
+          <img class="modal-content" id="img01" />
+          <div id="caption"></div>
+        </div>
+      </section>
+    </main>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./main.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+This is my current main.js
+//Select the element with the ID airplane_container
+const airplaneContainer = document.getElementById("airplane_container");
+
+// Select the form element
+const form = document.getElementById("addAirplane_form");
+
+//Set the base URL for the API
+const baseURL = "/api/airplanes";
+
+//Callback function to handle successful response for fetching airplanes
+const airplaneCallback = ({ data: airplanes }) => displayAirplanes(airplanes);
+
+//Callback function to handle errors
+const errCallback = (err) => console.log(err);
+
+//Function to use axios and fetch airplanes from the API
+const getAllAirplanes = () =>
+  axios.get(baseURL).then(airplaneCallback).catch(errCallback);
+
+//Function to create a new airplane
+const createAirplane = (body) =>
+  axios.post("/api/airplanes", body).then(airplaneCallback).catch(errCallback);
+//Function to delete an airplane
+const deleteAirplane = (id) =>
+  axios.delete("${baseURL}/${id}").then(airplaneCallback).catch(errCallback);
+//Function to update an airplane
+const updateAirplane = (id, type) =>
+  axios
+    .put(`${baseURL}/${id}`, { type })
+    .then(airplaneCallback)
+    .catch(errCallback);
+
+//Event handler for form submission
+function submitHandler(event) {
+  event.preventDefault();
+  //access the input fields
+  let nNumber = document.getElementById("nNumber");
+  let year = document.getElementById("airplane_year");
+  let make = document.getElementById("airplane_make");
+  let model = document.getElementById("airplane_model");
+  let price = document.getElementById("airplane_price");
+  let imgURL = document.getElementById("airplane_imgURL");
+  //creating an object with the input values
+  let bodyObj = {
+    nNumber: nNumber.value,
+    year: year.value,
+    make: make.value,
+    model: model.value,
+    price: price.value,
+    imgURL: imgURL.value,
+  };
+  //creating a new airplane with the input values
+  createAirplane(bodyObj);
+  //reset the form/input fields
+  nNumber.value = "";
+  year.value = "";
+  make.value = "";
+  model.value = "";
+  price.value = "";
+  imgURL.value = "";
+}
+
+//Function to create an airplane card and append it to the airplane container
+function createAirplaneCard(airplane) {
+  //create a new div element for the card
+  const airplaneCard = document.createElement("div");
+  airplaneCard.classList.add("airplane_card");
+  //set the html content of the house card element unsing teplate literals
+
+  // Add the nNumber as a data attribute to the card
+  airplaneCard.dataset.nNumber = airplane.nNumber;
+  airplaneCard.innerHTML = `<img alt="photo of airplane" src=${airplane.imgURL} class="airplane_cover_img" onclick="openModal(this.src)" data-nNumber=${airplane.nNumber} />
+  
+  <p class="airplane_nNumber">${airplane.nNumber}</p>
+  <p class="airplane_year">${airplane.year}</p>
+  <p class="airplane_make">${airplane.make}</p>
+  <p class="airplane_model">${airplane.model}</p>
+  <p class="airplane_price">${airplane.price}</p>
+  
+
+  <div class="container_btns">
+    <button onclick="updateAirplane(${airplane.id}, 'minus')"> - </button>
+    <button onclick="updateAirplane(${airplane.id}, 'plus')"> + </button>
+    <button class="delete_btn onclick="deleteAirplane(${airplane.id}"> Delete </button>
+  </div>
+  `;
+  //appending the airplane card to the airplane container
+  airplaneContainer.appendChild(airplaneCard);
+}
+
+function displayAirplanes(arr) {
+  //clear the airplane container
+  airplaneContainer.innerHTML = ``;
+  //iterate over the array of airplanes
+  for (let i = 0; i < arr.length; i++) {
+    //create an airplane card for each airplane
+    createAirplaneCard(arr[i]);
+  }
+}
+
+//Add event listeners to the delete and update buttons
+// updateAirplaneBtn.addEventListener("click", updateAirplane);
+// deleteAirplaneBtn.addEventListeneer("click", deleteAirplane);
+
+//Add event listener to the form for form submission
+// form.addEventListener("submit", submitHandler);
+//Fetch airplanes from the API and display them on page load
+getAllAirplanes();
+
+//Path: public/index.html
+
+This is my current script.js
+
+function openModal(src) {
+  console.log(src);
+  //Get the modal
+  const modal = document.getElementById("modal");
+
+  //Get the image and insert it inside the modal - use its "alt" text as a caption
+  const img = document.getElementById("img01");
+  img.src = src;
+
+  //Get the <span> element that closes the modal
+  const span = document.getElementsByClassName("close")[0];
+
+  //Show the modal
+  modal.style.display = "block";
+
+  //When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+}
+
+document.addEventListener("DOMContentLoaded", (event) => {
+  const imgs = document.querySelectorAll(".airplane_imgURL");
+  const captionText = document.getElementById("caption");
+
+  imgs.forEach((img) => {
+    img.onclick = function (event) {
+      event.preventDefault(); // Prevent the default action
+      console.log("image clicked");
+
+      // Get the nNumber value from the clicked image
+      const nNumber = img.getAttribute("data-nNumber");
+
+      // Construct the image source based on the nNumber value
+      const src = `resources/${nNumber}.jpeg`;
+
+      //Open the modal with the constructed image source
+      openModal(src);
+
+      captionText.innerHTML = img.alt;
+    };
+  });
+});

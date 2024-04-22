@@ -1,0 +1,189 @@
+/* Resetting default styles */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Setting the background color for the body */
+body {
+  background-color: snow;
+}
+
+/* Styling the header */
+
+
+/* Styling the main content area */
+main {
+  display: flex; /* Using flexbox for alignment */
+  justify-content: center; /* Centering items horizontally */
+}
+
+/* Styling the form */
+form {
+  width: 350px; /* Setting the width of the form */
+  height: 350px; /* Setting the height of the form */
+  background-color: slategray; /* Setting the background color of the form */
+  position: relative; /* Setting the position of the form */
+  display: flex; /* Using flexbox for alignment */
+  flex-direction: column; /* Setting the direction of the flex items */
+  justify-content: space-evenly; /* Distributing space evenly between the flex items */
+  align-items: center; /* Centering items vertically */
+  margin: 30px; /* Adding margin around the form */
+  border-radius: 12px; /* Rounding the corners of the form */
+}
+
+/* Styling the button */
+button {
+  width: 75px; /* Setting the width of the buttons */
+  height: 30px; /* Setting the height of the buttons */
+  border-radius: 10%; /* Rounding the corners of the buttons */
+  border: none; /* Setting the border color of the buttons */
+  border-width: 2cap; /* Setting the border width of the buttons */
+  background-color: darkgreen; /* Setting the background color of the buttons */
+  color: white; /* Setting the text color of the buttons */
+}
+
+/* Styling the text input */
+input[type='text'] {
+  width: 85%; /* Setting the width of the text input */
+  height: 30px; /* Setting the height of the text input */
+  border: none; /* Removing the border of the text input */
+  border-bottom: 2px solid #232323; /* Adding a bottom border to the text input */
+  color: #232323; /* Setting the text color of the text input */
+  background-color: snow; /* Setting the background color of the text input */
+}
+
+/* Styling the price container */
+#price-container {
+  width: 85%; /* Setting the width of the price container */
+}
+
+/* Styling the radio container */
+#radio-container {
+  width: 100%; /* Setting the width of the radio container */
+  display: flex; /* Using flexbox for alignment */
+  justify-content: space-around; /* Distributing space evenly between the flex items */
+  align-items: center; /* Centering items vertically */
+}
+
+/* Styling the airplane container */
+#airplane_container {
+  display: flex; /* Using flexbox for alignment */
+  flex-wrap: wrap; /* Allowing the flex items to wrap onto multiple lines */
+  justify-content: center; /* Centering items horizontally */
+  align-items: center; /* Centering items vertically */
+}
+/* Add a black background color to the top navigation bar */
+.topnav {
+  background-color: slategray;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Styling the airplane cover image */
+.airplane-cover-img {
+  width: 300px; /* Setting the width of the airplane cover image */
+  height: 300px; /* Setting the height of the airplane cover image */
+  border-top-left-radius: 12px; /* Rounding the top left corner of the airplane cover image */
+  border-top-right-radius: 12px; /* Rounding the top right corner of the airplane cover image */
+  object-fit: cover; /* Scaling the airplane cover image to cover the entire container */
+}
+
+/* Styling the airplane card */
+.airplane-card {
+  background-color:slategrey; /* Setting the background color of the airplane card */
+  width: 300px; /* Setting the width of the airplane card */
+  margin: 20px; /* Adding margin around the airplane card */
+  display: flex; /* Using flexbox for alignment */
+  flex-direction: column; /* Setting the direction of the flex items */
+  align-items: center; /* Centering items vertically */
+  border-radius: 12px; /* Rounding the corners of the airplane card */
+  border-top-left-radius: 15px; /* Rounding the top left corner of the airplane card */
+  border-top-right-radius: 15px; /* Rounding the top right corner of the airplane card */
+}
+
+/* Styling the airplane price */
+.airplane-price {
+  font-size: 15px; /* Setting the font size of the airplane price */
+  margin: 5px 0; /* Adding margin to the top and bottom of the airplane price */
+}
+
+/* Styling the buttons container */
+.container-btns {
+  border: darkgreen; /* Setting the border color of the buttons container */
+  width: 100%; /* Setting the width of the buttons container */
+  display: flex; /* Using flexbox for alignment */
+  justify-content: space-evenly; /* Distributing space evenly between the flex items */
+  margin: 5px; /* Adding margin around the buttons container */
+}
+
+/* Styling the buttons in the buttons container */
+.container-btns > button {
+  width: 75px; /* Setting the width of the buttons */
+  height: 30px; /* Setting the height of the buttons */
+  border-radius: 10%; /* Rounding the corners of the buttons */
+  border: none; /* Setting the border color of the buttons */
+  border-width: 2cap; /* Setting the border width of the buttons */
+  background-color: darkgreen; /* Setting the background color of the buttons */
+  color: white; /* Setting the text color of the buttons */
+}
+
+
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.9);
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
