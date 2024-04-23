@@ -7,6 +7,7 @@ let globalID = 6;
 module.exports = {
   //Method to get all airplanes
   getAirplanes: (req, res) => res.status(200).send(airplanes),
+
   getAirplane: (req, res) => {
     const { nNumber } = req.params;
     const airplane = airplanes.find((plane) => plane.nNumber === nNumber);
@@ -22,7 +23,7 @@ module.exports = {
     let { globalID, nNumber, year, make, model, price, imgURL } = req.body;
     //Creating a new airplane from the extracted data
     let newAirplane = {
-      id: globalid,
+      id: globalID,
       nNumber,
       year,
       make,

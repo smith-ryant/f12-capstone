@@ -1,11 +1,15 @@
 //Select the element with the ID airplane_container
-const airplaneContainer = document.getElementById("airplane_container");
+const airplaneContainer = document.getElementById("airplane-container");
 
 // Select the form element
-const form = document.getElementById("addAirplane_form");
+const form = document.getElementById("addAirplane-form");
 
 //Set the base URL for the API
 const baseURL = "http://localhost:4000/api/airplanes";
+
+//Function to use axios and fetch airplanes from the API
+const getAllAirplanes = () =>
+  axios.get(baseURL).then(airplaneCallback).catch(errCallback);
 
 //Callback function to handle successful response for fetching airplanes
 const airplaneCallback = ({ data: airplanes }) => displayAirplanes(airplanes);
@@ -13,12 +17,10 @@ const airplaneCallback = ({ data: airplanes }) => displayAirplanes(airplanes);
 //Callback function to handle errors
 const errCallback = (err) => console.log(err);
 
-//Function to use axios and fetch airplanes from the API
-const getAllAirplanes = () => axios.get(baseURL).then(airplaneCallback); //.catch(errCallback);
-
 //Function to create a new airplane
 const createAirplane = (body) =>
   axios.post("/api/airplanes", body).then(airplaneCallback).catch(errCallback);
+
 //Function to delete an airplane
 const deleteAirplane = (id) =>
   axios.delete("${baseURL}/${id}").then(airplaneCallback).catch(errCallback);
@@ -34,12 +36,26 @@ function submitHandler(event) {
   event.preventDefault();
   //access the input fields
   let nNumber = document.getElementById("nNumber");
+  console.log(nNumber.value);
   let year = document.getElementById("airplane-year");
+  console.log(year.value);
   let make = document.getElementById("airplane-make");
+  console.log(make.value);
   let model = document.getElementById("airplane-model");
+  console.log(model.value);
   let price = document.getElementById("airplane-price");
+  console.log(price.value);
   let imgURL = document.getElementById("airplane-imgURL");
+  console.log(imgURL.value);
   //creating an object with the input values
+  // console.log(
+  //   nNumber.value,
+  //   year.value,
+  //   make.value,
+  //   model.value,
+  //   price.value,
+  //   imgURL.value
+  // );
   let bodyObj = {
     nNumber: nNumber.value,
     year: year.value,
@@ -106,7 +122,8 @@ const displayAirplanes = (arr) => {
 // deleteAirplaneBtn.addEventListeneer("click", deleteAirplane);
 
 //Add event listener to the form for form submission
-// form.addEventListener("submit", submitHandler);
+form.addEventListener("submit", submitHandler);
+
 //Fetch airplanes from the API and display them on page load
 getAllAirplanes();
 

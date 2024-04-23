@@ -1,0 +1,14 @@
+PROBLEMS
+=======================================
+css is not right on the nav bar
+links on the nav bar are incorrect
+format the currency in th ecard
+
+
+IDEAS
+=======================================
+button to reserve the airplane
+move to airplane to a reserved table
+make the images shrink as the window gets smaller
+fix the add a plane form to always be in the same spot
+
