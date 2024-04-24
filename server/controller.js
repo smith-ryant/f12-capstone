@@ -8,6 +8,7 @@ module.exports = {
   //Method to get all airplanes
   getAirplanes: (req, res) => res.status(200).send(airplanes),
 
+  //Method to get a single airplane by nNumber, this is used when an image is clicked.
   getAirplane: (req, res) => {
     const { nNumber } = req.params;
     const airplane = airplanes.find((plane) => plane.nNumber === nNumber);
@@ -41,7 +42,7 @@ module.exports = {
   //Method to delete an airplane
   deleteAirplane: (req, res) => {
     //Extract the airplane ID from the request parameters
-    let index = airplanes.findIndex((elem) => elem.id === +req.parms.id);
+    let index = airplanes.findIndex((elem) => elem.id === +req.params.id);
     //Removing the airplane from the airplane array using the index
     airplanes.splice(index, 1);
     //Send the airplane array as the response

@@ -2,13 +2,19 @@ PROBLEMS
 =======================================
 css is not right on the nav bar
 links on the nav bar are incorrect
-format the currency in th ecard
+format the currency in the airplane card
+fix the add aircraft button
+fix the delete button
+fix some sort of .put
+how do I define a url when I am serving static files?
+set up the database (supabase)
+make the images shrink as the window gets smaller
+
 
 
 IDEAS
 =======================================
 button to reserve the airplane
-move to airplane to a reserved table
-make the images shrink as the window gets smaller
+move the airplane to a reserved table
 fix the add a plane form to always be in the same spot
 

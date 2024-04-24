@@ -23,7 +23,7 @@ const createAirplane = (body) =>
 
 //Function to delete an airplane
 const deleteAirplane = (id) =>
-  axios.delete("${baseURL}/${id}").then(airplaneCallback).catch(errCallback);
+  axios.delete(`${baseURL}/${id}`).then(airplaneCallback).catch(errCallback);
 //Function to update an airplane
 const updateAirplane = (id, type) =>
   axios
@@ -48,14 +48,6 @@ function submitHandler(event) {
   let imgURL = document.getElementById("airplane-imgURL");
   console.log(imgURL.value);
   //creating an object with the input values
-  // console.log(
-  //   nNumber.value,
-  //   year.value,
-  //   make.value,
-  //   model.value,
-  //   price.value,
-  //   imgURL.value
-  // );
   let bodyObj = {
     nNumber: nNumber.value,
     year: year.value,
@@ -64,8 +56,10 @@ function submitHandler(event) {
     price: price.value,
     imgURL: imgURL.value,
   };
+
   //creating a new airplane with the input values
   createAirplane(bodyObj);
+
   //reset the form/input fields
   nNumber.value = "";
   year.value = "";
@@ -95,7 +89,7 @@ function createAirplaneCard(airplane) {
 
     <div class="container-btns">
 
-      <button class="delete-btn" onclick="deleteAirplane(${airplane.id}"> Delete </button>
+      <button class="delete-btn" onclick="deleteAirplane(${airplane.id})"> Delete </button>
     </div>
   `;
   //appending the airplane card to the airplane container
@@ -117,14 +111,19 @@ const displayAirplanes = (arr) => {
   }
 };
 
-//Add event listeners to the delete and update buttons
+//Add event listeners to the update buttons
 // updateAirplaneBtn.addEventListener("click", updateAirplane);
-// deleteAirplaneBtn.addEventListeneer("click", deleteAirplane);
+
+const deleteButtons = document.querySelectorAll(".delete-btn");
+deleteButtons.forEach((button) => {
+  button.addEventListener("click", function () {
+    const id = this.parentElement.parentElement.dataset.id;
+    deleteAirplane(id);
+  });
+});
 
 //Add event listener to the form for form submission
 form.addEventListener("submit", submitHandler);
 
 //Fetch airplanes from the API and display them on page load
 getAllAirplanes();
-
-//Path: public/index.html

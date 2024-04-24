@@ -22,7 +22,7 @@ app.get(`/api/airplanes`, getAirplanes);
 
 //Start with static files
 app.use(express.static(path.join(__dirname, "../public"))); //Serve static files
-console.log(__dirname);
+
 //Define the route to the home page
 app.get("/", (req, res) => {
   //Send the index.html file
@@ -50,7 +50,7 @@ app.get(`/airplane/resources/:filename`, (req, res) => {
 app.post("/api/airplanes", createAirplane);
 
 // //Define the route to delete an airplane
-// app.delete("/api/airplanes/:id", deleteAirplane);
+app.delete("/api/airplanes/:id", deleteAirplane);
 
 // //Define the route to update an airplane
 // app.put("/api/airplanes/id", updateAirplane);
