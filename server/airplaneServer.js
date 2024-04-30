@@ -72,52 +72,37 @@ app.get("/resources/N509JJ.webp", (req, res) => {
   res.sendFile(path.join(__dirname, "/../public/resources/N509JJ.webp"));
 });
 
+//
 app.get("/resources/N34RF.jpeg", (req, res) => {
   res.sendFile(path.join(__dirname, "/../public/resources/N34RF.jpeg"));
 });
 
+//Define the route to server the airplane image
 app.get("/airplane/resources/N25GR.jpeg", (req, res) => {
   res.sendFile(path.join(__dirname, "/../public/resources/N25GR.jpeg"));
 });
 
+//Define the route to server the airplane image
 app.get("/airplane/resources/N128JP.jpeg", (req, res) => {
   res.sendFile(path.join(__dirname, "/../public/resources/N128JP.jpeg"));
 });
 
+//Define the route to server the airplane image
 app.get("/airplane/resources/N26EM.webp", (req, res) => {
   res.sendFile(path.join(__dirname, "/../public/resources/N26EM.webp"));
 });
 
+//Define the route to server the airplane image
 app.get("/airplane/resources/N509JJ.webp", (req, res) => {
   res.sendFile(path.join(__dirname, "/../public/resources/N509JJ.webp"));
 });
 
+//Define the route to server the airplane image
 app.get("/airplane/resources/N34RF.jpeg", (req, res) => {
   res.sendFile(path.join(__dirname, "/../public/resources/N34RF.jpeg"));
 });
 
-//Define the route to the home page
-// app.get("/", (req, res) => {
-//   //Send the index.html file
-//   res.sendFile(path.join(__dirname, "../public/index.html"));
-// });
-
-// app.get("/airplane/airplane.js", (req, res) => {
-//   res.sendFile(path.join(__dirname, "/../public/airplane.js"));
-// });
-
-// app.get(`/airplane/resources/:filename`, (req, res) => {
-//   const { filename } = req.params;
-//   res.sendFile(path.join(__dirname, `/../public/resources/${filename}`));
-// });
-
-// //Define the route to update an airplane
-// app.put("/api/airplanes/id", updateAirplane);
-
-//Run the server on port and listen for requests
-// app.listen(4001, () => {
-//   console.log("Server is running on port 4001");
-// });
+//Start the server
 app.listen(process.env.PORT || 4001, () => {
   console.log(`Server is running on port ${process.env.PORT || 4001}`);
 });

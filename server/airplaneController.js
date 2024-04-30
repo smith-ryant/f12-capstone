@@ -40,7 +40,6 @@ module.exports = {
           const [results, metadata] = await sequelize.query(
             getAllAirplanesQuery
           );
-          console.log(results);
           res.status(201).send(results);
         } catch (error) {
           console.error("Error creating airplane:", error);

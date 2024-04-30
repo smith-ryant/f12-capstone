@@ -90,7 +90,6 @@ function createAirplaneCard(airplane) {
 }
 
 function openModal(nNumber) {
-  console.log(nNumber);
   window.location.href = `http://localhost:4001/airplane/?nNumber=${nNumber}`;
 }
 
